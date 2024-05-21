@@ -14,9 +14,6 @@ class Proprietario {
 
 
     adicionarCarro(carro) {
-        if (this.carros.includes(carro)) {
-            return;
-        }
         this.carros.push(carro);
     }
 

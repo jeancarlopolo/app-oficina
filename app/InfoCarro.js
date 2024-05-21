@@ -2,19 +2,21 @@ import React, { useRef, useState } from 'react';
 import { View, Text, Animated, PanResponder, StyleSheet, Pressable, TextInput } from 'react-native';
 import { Carro } from './Carro';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const CarroView = ({ carro, removerCarro, navigation, proprietario, atualizarCarros }) => {
+const InfoCarro = ({ carro, informacao, nomeInfo, icone, atualizarCarro }) => {
+    console.log(informacao);
     const pan = useRef(new Animated.Value(0)).current;
-    let corFundo = carro.corPTpraHex() != null ? carro.corPTpraHex() : '#f2ecff';
-    let corTexto = corFundo == '#FFFFFF' || corFundo == '#C0C0C0' ? '#333' : '#f2ecff';
+    const key = nomeInfo;
 
-    let styles = StyleSheet.create({
+    const styles = StyleSheet.create({
         animatedContainer: {
             height: '100%',
             width: '100%',
-            backgroundColor: corFundo,
+            backgroundColor: 'white',
             verticalAlign: 'center',
             justifyContent: 'center',
+            paddingLeft: 15,
         },
         hiddenContainer: {
             position: 'absolute',
@@ -31,7 +33,7 @@ const CarroView = ({ carro, removerCarro, navigation, proprietario, atualizarCar
             justifyContent: 'space-between',
             alignItems: 'center',
             verticalAlign: 'center',
-            backgroundColor: corFundo,
+            backgroundColor: '#f2ecff',
             marginVertical: 8,
             borderRadius: 10,
             shadowColor: '#000',
@@ -42,24 +44,24 @@ const CarroView = ({ carro, removerCarro, navigation, proprietario, atualizarCar
             overflow: 'hidden',
             flex: 1,
         },
-        placa: {
+        informacao: {
             fontSize: 18,
             fontFamily: 'Nunito_500Regular',
-            color: corTexto,
+            color: '#333',
         },
-        modelo: {
+
+        nomeInfo: {
             fontSize: 14,
             fontFamily: 'Nunito_400Regular',
-            color: corTexto,
+            color: '#333',
         },
-        placaInput: {
+        nomeInput: {
             fontSize: 18,
             fontFamily: 'Nunito_500Regular',
-            color: corTexto,
+            color: '#333',
             flex: 1,
         },
         icon: {
-            color: corTexto,
             marginRight: 15,
         },
     });
@@ -101,35 +103,34 @@ const CarroView = ({ carro, removerCarro, navigation, proprietario, atualizarCar
 
     let [aberto, setAberto] = useState(false);
     let [editing, setEditing] = useState(false);
-    const [placa, setPlaca] = useState(carro.placa);
-    let placaAntiga = carro.placa;
+    const [info, setInfo] = useState(informacao);
+    let infoAntiga = informacao;
 
     const handleEdit = () => {
         voltar();
-        placaAntiga = placa;
+        infoAntiga = info;
         setEditing(true);
     };
 
     const handleCancel = () => {
-        setPlaca(placaAntiga);
+        setInfo(infoAntiga);
         setEditing(false);
     };
 
     const handleConfirm = () => {
-        carro.placa = placa;
+        carro[nomeInfo.toLowerCase()] = info;
         setEditing(false);
+        atualizarCarro();
     };
 
     return (carro ?
         <View style={styles.itemContainer}>
             <View style={styles.hiddenContainer}>
-                <View style={{ flexDirection: 'row'}}>
-                    <Pressable onPress={handleEdit} android_ripple={{ color: '#4a4857' }}>
-                        <Icon name="edit" size={24} color="#f2ecff" style={styles.icon} />
-                    </Pressable>
-                    <Pressable onPress={() => removerCarro(carro)} android_ripple={{ color: '#4a4857' }}>
-                        <Icon name="delete" size={24} color="#f2ecff" style={styles.icon} />
-                    </Pressable>
+                <View style={{ flexDirection: 'row' }}>
+                    {nomeInfo === "Proprietário" ? null : (
+                        <Pressable onPress={handleEdit} android_ripple={{ color: '#4a4857' }}>
+                            <Icon name="edit" size={24} color="#f2ecff" style={styles.icon} />
+                        </Pressable>)}
                 </View>
             </View>
             <Animated.View
@@ -140,21 +141,18 @@ const CarroView = ({ carro, removerCarro, navigation, proprietario, atualizarCar
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15, paddingVertical: 30, alignItems: 'strech' }}>
                     {editing ? (
                         <TextInput
-                            style={styles.placaInput}
-                            value={placa}
-                            onChangeText={setPlaca}
+                            style={styles.nomeInput}
+                            value={info}
+                            onChangeText={setInfo}
                             autoFocus />
                     ) : (
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', alignContent: 'center', alignSelf: 'flex-start' }}>
-                            <Pressable onPress={() => navigation.navigate('Informações do Carro', { carro:carro, proprietario:proprietario, atualizarCarros:atualizarCarros })}>
-                                <Icon name="directions-car" size={24} color="#333" style={styles.icon} />
-                            </Pressable>
-                            <Pressable onPress={() => navigation.navigate('Informações do Carro', { carro:carro, proprietario:proprietario, atualizarCarros:atualizarCarros })}>
-                            <View style={{ flexDirection: 'column' }}> {/*coluna nome tipo*/}
-                                <Text style={styles.placa}>{placa}</Text>
-                                <Text style={styles.modelo}>{carro.modelo}</Text>
+                            <Icon name={icone} size={24} color="#333" style={styles.icon} />
+                            <View style={{ flexDirection: 'column' }}> {/*coluna informacao tipo*/}
+                                <Text style={styles.modelo}>{nomeInfo}</Text>
+                                <Text style={styles.informacao}>{info}</Text>
                             </View>
-                            </Pressable>
+
                         </View>
                     )}
                     {editing ? (
@@ -177,4 +175,4 @@ const CarroView = ({ carro, removerCarro, navigation, proprietario, atualizarCar
     );
 };
 
-export { CarroView };
+export { InfoCarro };

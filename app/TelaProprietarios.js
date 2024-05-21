@@ -13,6 +13,7 @@ class TelaProprietarios extends Component {
             proprietarios: props.proprietarioService.listarProprietarios(),
             criando: false,
             proprietarioService: props.proprietarioService,
+            navigator: props.navigation,
         };
     }
 

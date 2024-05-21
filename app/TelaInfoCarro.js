@@ -4,26 +4,23 @@ import { Proprietario, ProprietarioService } from './Proprietario.js';
 import { ProprietarioView } from './ProprietarioView.js';
 import { NovoProprietarioView } from './NovoProprietarioView.js';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { InfoCarro } from './InfoCarro.js';
 
 
-class TelaProprietarios extends Component {
-    constructor(route) {
-        super(route);
+class TelaInfoCarro extends Component {
+    constructor(props) {
+        super(props);
+        console.log(props.route.params.carro);
         this.state = {
-            proprietarios: route.proprietarioService.listarProprietarios(),
-            criando: false,
-            proprietarioService: route.proprietarioService,
+            carro: props.route.params.carro,
+            infos: [
+                <InfoCarro nomeInfo='Cor' informacao={props.route.params.carro.cor} carro={props.route.params.carro} icone="palette" atualizarCarro={props.route.params.atualizarCarros}/>,
+            <InfoCarro nomeInfo='Placa' informacao={props.route.params.carro.placa} carro={props.route.params.carro} icone="confirmation-number" atualizarCarro={props.route.params.atualizarCarros} />,
+            <InfoCarro nomeInfo='Modelo' informacao={props.route.params.carro.modelo} carro={props.route.params.carro} icone="directions-car" atualizarCarro={props.route.params.atualizarCarros}/>,
+            <InfoCarro nomeInfo='Motorista' informacao={props.route.params.carro.motorista} carro={props.route.params.carro} icone="person" atualizarCarro={props.route.params.atualizarCarros}/>,
+            <InfoCarro nomeInfo='Proprietário' informacao={props.route.params.proprietario.nome} carro={props.route.params.carro} icone="person" atualizarCarro={props.route.params.atualizarCarros}/>],
         };
-    }
-
-    adicionarProprietario = (nome) => {
-        let proprietario = new Proprietario(nome, this.state.proprietarioService);
-        proprietario.adicionarProprietario(this.state.proprietarioService);
-        this.setState({ proprietarioService: proprietario.proprietarioService , criando: false});
-    }
-
-    cancelar = () => {
-        this.setState({ criando: false });
     }
 
     render() {
@@ -31,43 +28,17 @@ class TelaProprietarios extends Component {
             <View style={styles.container} >
                 <ScrollView style={styles.container} horizontal={false} scrollEnabled={true}>
                     <FlatList
-                        data={this.state.proprietarios}
-                        renderItem={({ item }) => <ProprietarioView proprietario={item}
-                            removerProprietario={this.props.removerProprietario}
-                            navigation={this.props.navigation}
-                        />}
-                        keyExtractor={item => item.id}
+                        data={this.state.infos}
+                        renderItem={({ item }) => item}
+                        keyExtractor={(item, index) => index}
                     />
-                    {(this.state.criando) && (
-                        <NovoProprietarioView
-                            adicionarProprietario={this.adicionarProprietario}
-                            cancelar={this.cancelar}
-                            proprietarioService={this.state.proprietarioService}
-                        />
-                    )}
-
                 </ScrollView>
-                <Pressable
-                    style={{
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 70,
-                        position: 'absolute',
-                        bottom: 30,
-                        right: 10,
-                        height: 70,
-                        backgroundColor: '#00a97f',
-                        borderRadius: 100,
-                    }}
-                    onPress={() => this.setState({ criando: !this.state.criando })}
+            </View>
 
-                    android_ripple={{ color: '#00a97f' }}
-                >
-                    <Icon name="add" size={30} color="f2ecff" />
-                </Pressable></View>
         );
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -76,6 +47,16 @@ const styles = StyleSheet.create({
         padding: 10,
         flexDirection: 'column',
     },
+    info: {
+        fontSize: 18,
+        fontFamily: 'Nunito_500Regular',
+        color: '#333',
+    },
+    nomeInfo: {
+        fontSize: 14,
+        fontFamily: 'Nunito_400Regular',
+        color: '#333',
+    },
 });
 
-export { TelaProprietarios };
+export { TelaInfoCarro };

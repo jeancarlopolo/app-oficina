@@ -62,7 +62,7 @@ const ProprietarioView = ({ proprietario, removerProprietario, navigation }) => 
     };
 
     const handlePress = () => {
-        navigation.navigate('TelaCarros', { proprietario:proprietario });
+        navigation.navigate('Carros', { proprietario:proprietario });
     }
 
     return (proprietario ?

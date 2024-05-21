@@ -9,8 +9,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { App } from './App.js';
 import * as Font from 'expo-font';
+import { TelaInfoCarro } from './TelaInfoCarro.js';
+import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function MeuNavigator() {
 
@@ -18,7 +21,7 @@ export default function MeuNavigator() {
 
     return (
         <Stack.Navigator initialRouteName='App'>
-            
+
             <Stack.Screen
                 name="Gerenciador de Oficina"
                 component={App}
@@ -26,6 +29,14 @@ export default function MeuNavigator() {
                     navigation: navigation,
                 }}
             />
+            <Stack.Screen
+                name="Informações do Carro"
+                component={TelaInfoCarro}
+                initialParams={{
+                    navigation: navigation,
+                }}
+            />
+
 
             <Stack.Screen
                 name="Carros"
