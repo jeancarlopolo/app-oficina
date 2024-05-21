@@ -3,9 +3,12 @@ import { View, Text, Pressable } from 'react-native';
 import { Carro, Checklist } from './Carro.js';
 import { Proprietario, ProprietarioService } from './Proprietario.js';
 import { TelaProprietarios } from './TelaProprietarios.js';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import * as Font from 'expo-font';
 
+const Stack = createStackNavigator();
 const fetchFonts = () => {
     return Font.loadAsync({
         'Nunito_500Regular': require('../assets/fonts/Nunito-Regular.ttf'),
@@ -13,21 +16,32 @@ const fetchFonts = () => {
 };
 
 
-
+// isso aqui é uma massa de manobra
+// um fantasma do passado
+// o navigation possuiu literalmente tudo que o app tinha e eu nao sei como isso aconteceu.
 class App extends Component {
-    constructor(props) {
-        super(props);
+    constructor(route) {
+        super(route);
 
         this.state = {
             proprietarioService: new ProprietarioService(),
+            criandoProprietario: false,
+            navigation: route.navigation,
         };
 
     }
-    removerProprietario = (proprietario) => {
-        this.state.proprietarioService.removerProprietario(proprietario);
-        this.setState({ proprietarioService: proprietario.proprietarioService});
-      }
 
+    adicionarProprietario = (nome) => {
+        new Proprietario(nome, this.state.proprietarioService);
+        this.setState({proprietarioService: this.state.proprietarioService, criandoProprietario: false})
+    }
+     removerProprietario = (proprietario) => {
+        this.state.proprietarioService.removerProprietario(proprietario);
+        this.setState({proprietarioService: this.state.proprietarioService, criandoProprietario: false})
+    }
+
+
+   
     componentDidMount() {
         fetchFonts();
         // proprietário de exemplo 1
@@ -56,27 +70,10 @@ class App extends Component {
 
 
     render() {
-        return (
-            <View style={{ flex: 1 }}>
-                <TelaProprietarios proprietarioService={this.state.proprietarioService} removerProprietario={this.removerProprietario} />
-                <Pressable
-                    style={{
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 70,
-                        position: 'absolute',
-                        bottom: 30,
-                        right: 10,
-                        height: 70,
-                        backgroundColor: '#00a97f',
-                        borderRadius: 100,
-                    }}
-                    android_ripple={{ color: '#00a97f' }}
-                >
-                    <Icon name="add" size={30} color="f2ecff" />
-                </Pressable>
-            </View>
+        return (<TelaProprietarios proprietarioService={this.state.proprietarioService} navigation={this.state.navigation} adicionarProprietario={this.adicionarProprietario} removerProprietario={this.removerProprietario} />
+            
         );
     }
 }
-export default App;
+
+export { App };

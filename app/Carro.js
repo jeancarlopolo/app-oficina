@@ -16,6 +16,33 @@ class Carro {
         this.checklists.push(checklist);
     }
 
+    corPTpraHex() {
+        let cores = {
+            "azul": "#0000FF",
+            "vermelho": "#FF0000",
+            "verde": "#008000",
+            "amarelo": "#FFFF00",
+            "preto": "#000000",
+            "branco": "#FFFFFF",
+            "prata": "#C0C0C0",
+        }
+        return cores[this.cor.toLowerCase()];
+    }
+
+    corHexPraPT(hex) {
+        let cores = {
+            "#0000FF": "azul",
+            "#FF0000": "vermelho",
+            "#008000": "verde",
+            "#FFFF00": "amarelo",
+            "#000000": "preto",
+            "#FFFFFF": "branco",
+            "#C0C0C0": "prata",
+        }
+        return cores[hex.toUpperCase()];
+    }
+
+
     editarChecklist(checklist) {
         let index = this.checklists.findIndex(c => c.dataCriacao === checklist.dataCriacao);
         if (index > -1) {

@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, Animated, PanResponder, StyleSheet, Pressable, TextInput } from 'react-native';
+import { Carro } from './Carro';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-
-const ProprietarioView = ({ proprietario, removerProprietario, navigation }) => {
+const CarroView = ({ carro, removerCarro }) => {
     const pan = useRef(new Animated.Value(0)).current;
 
     let voltar = () => {
@@ -42,37 +42,33 @@ const ProprietarioView = ({ proprietario, removerProprietario, navigation }) => 
 
     let [aberto, setAberto] = useState(false);
     let [editing, setEditing] = useState(false);
-    const [nome, setNome] = useState(proprietario.nome);
-    let nomeAntigo = proprietario.nome;
+    const [placa, setPlaca] = useState(carro.placa);
+    let placaAntiga = carro.placa;
 
     const handleEdit = () => {
         voltar();
-        nomeAntigo = nome;
+        placaAntiga = placa;
         setEditing(true);
     };
 
     const handleCancel = () => {
-        setNome(nomeAntigo);
+        setPlaca(placaAntigo);
         setEditing(false);
     };
 
     const handleConfirm = () => {
-        proprietario.nome = nome;
+        carro.placa = placa;
         setEditing(false);
     };
 
-    const handlePress = () => {
-        navigation.navigate('CarroView', { proprietario });
-    }
-
-    return (proprietario ?
+    return (carro ?
         <View style={styles.itemContainer}>
             <View style={styles.hiddenContainer}>
                 <View style={{ flexDirection: 'row', padding: 15 }}>
                     <Pressable onPress={handleEdit} android_ripple={{ color: '#4a4857' }}>
                         <Icon name="edit" size={24} color="#f2ecff" style={styles.icon} />
                     </Pressable>
-                    <Pressable onPress={() => removerProprietario(proprietario)} android_ripple={{ color: '#4a4857' }}>
+                    <Pressable onPress={() => removerCarro(carro)} android_ripple={{ color: '#4a4857' }}>
                         <Icon name="delete" size={24} color="#f2ecff" style={styles.icon} />
                     </Pressable>
                 </View>
@@ -85,17 +81,12 @@ const ProprietarioView = ({ proprietario, removerProprietario, navigation }) => 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15, paddingVertical: 30, alignItems: 'center' }}>
                     {editing ? (
                         <TextInput
-                            style={styles.nomeInput}
-                            value={nome}
-                            onChangeText={setNome}
+                            style={styles.placaInput}
+                            value={placa}
+                            onChangeText={setPlaca}
                             autoFocus />
                     ) : (
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Pressable onPress={handlePress}>
-                                <Icon name="person" size={24} color="#333" style={styles.icon} />
-                            </Pressable>
-                            <Text style={styles.nome}>{nome}</Text>
-                        </View>
+                        <Text style={styles.placa}>{placa}</Text>
                     )}
                     {editing ? (
                         <View style={{ flexDirection: 'row' }}>
@@ -151,12 +142,12 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         flex: 1,
     },
-    nome: {
+    placa: {
         fontSize: 18,
         fontFamily: 'Nunito_500Regular',
         color: '#333',
     },
-    nomeInput: {
+    placaInput: {
         fontSize: 18,
         fontFamily: 'Nunito_500Regular',
         color: '#333',
@@ -167,4 +158,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export { ProprietarioView };
+export { CarroView };

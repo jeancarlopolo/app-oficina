@@ -10,8 +10,9 @@ class Proprietario {
         this.id = Math.random().toString(16).slice(2)
         this.nome = nome;
         this.carros = [];
+        console.log('ProprietarioService', proprietarioService);
         this.proprietarioService = proprietarioService;
-        this.proprietarioService.adicionarProprietario(this);
+        proprietarioService.adicionarProprietario(this);
     }
 
 
@@ -57,6 +58,12 @@ class ProprietarioService {
     }
 
     adicionarProprietario(proprietario) {
+        if (this.proprietarios.includes(proprietario)) {
+            return;
+        }
+        if (proprietario.nome === '' || proprietario.nome === undefined) {
+            return;
+        }
         this.proprietarios.push(proprietario);
     }
 

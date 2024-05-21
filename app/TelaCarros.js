@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, StyleSheet, FlatList, Pressable, View } from 'react-native';
 import { Proprietario, ProprietarioService } from './Proprietario.js';
+import { Carro, Checklist } from './Carro.js';
+import { CarroView } from './CarroView.js';
 import { ProprietarioView } from './ProprietarioView.js';
 import { NovoProprietarioView } from './NovoProprietarioView.js';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
-class TelaProprietarios extends Component {
+class TelaCarros extends Component {
     constructor(route) {
         super(route);
         this.state = {
-            proprietarios: route.proprietarioService.listarProprietarios(),
+            carros: route.params.proprietario.listarCarros(),
+            proprietario: route.params.proprietario,
             criando: false,
-            proprietarioService: route.proprietarioService,
         };
     }
 
-    adicionarProprietario = (nome) => {
-        let proprietario = new Proprietario(nome, this.state.proprietarioService);
-        this.setState({ proprietarioService: proprietario.proprietarioService , criando: false});
+    adicionarCarro = (placa, modelo, cor, motorista) => {
+        let carro = new Carro(placa, modelo, cor, this.state.proprietario, motorista);
+        this.setState({ proprietario: this.state.proprietario, criando: false });
     }
 
     cancelar = () => {
@@ -30,20 +32,19 @@ class TelaProprietarios extends Component {
             <View style={styles.container} >
                 <ScrollView style={styles.container} horizontal={false}>
                     <FlatList
-                        data={this.state.proprietarios}
-                        renderItem={({ item }) => <ProprietarioView proprietario={item}
-                            removerProprietario={this.props.removerProprietario}
+                        data={this.state.carros}
+                        renderItem={({ item }) => <CarroView carro={item}
+                            removerProprietario={this.props.removerCarro}
                             navigation={this.props.navigation}
                         />}
                         keyExtractor={item => item.id}
                     />
-                    {(this.state.criando) && (
-                        <NovoProprietarioView
+                    {/* {(this.state.criando) && (
+                        <NovoCarroView // FAZER PARTE DO CARRO NOVO
                             adicionarProprietario={this.adicionarProprietario}
                             cancelar={this.cancelar}
-                            proprietarioService={this.state.proprietarioService}
                         />
-                    )}
+                    )} */}
 
                 </ScrollView>
                 <Pressable
@@ -77,4 +78,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export { TelaProprietarios };
+export { TelaCarros };
