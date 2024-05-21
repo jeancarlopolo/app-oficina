@@ -7,12 +7,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 class TelaProprietarios extends Component {
-    constructor(route) {
-        super(route);
+    constructor(props) {
+        super(props);
         this.state = {
-            proprietarios: route.proprietarioService.listarProprietarios(),
+            proprietarios: props.proprietarioService.listarProprietarios(),
             criando: false,
-            proprietarioService: route.proprietarioService,
+            proprietarioService: props.proprietarioService,
         };
     }
 
@@ -29,7 +29,7 @@ class TelaProprietarios extends Component {
     render() {
         return (
             <View style={styles.container} >
-                <ScrollView style={styles.container} horizontal={false}>
+                <ScrollView style={styles.container} horizontal={false} scrollEnabled={true}>
                     <FlatList
                         data={this.state.proprietarios}
                         renderItem={({ item }) => <ProprietarioView proprietario={item}

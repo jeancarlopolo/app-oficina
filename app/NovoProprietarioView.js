@@ -8,7 +8,7 @@ const NovoProprietarioView = ({ adicionarProprietario, cancelar, proprietarioSer
 
     return (
         <View style={styles.itemContainer}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15, alignItems: 'center', flex:1 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 15, alignItems: 'center', flex:1 }}>
                 {(
                     <TextInput
                         style={styles.nomeInput}
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
+        padding: 15,
         overflow: 'hidden',
     },
     nome: {

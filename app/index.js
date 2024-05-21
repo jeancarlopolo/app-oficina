@@ -20,22 +20,15 @@ export default function MeuNavigator() {
         <Stack.Navigator initialRouteName='App'>
             
             <Stack.Screen
-                name="App"
+                name="Gerenciador de Oficina"
                 component={App}
-                initialParams={{
-                    navigation: navigation,
-                }}
-            />
-            <Stack.Screen
-                name="TelaProprietarios"
-                component={TelaProprietarios}
                 initialParams={{
                     navigation: navigation,
                 }}
             />
 
             <Stack.Screen
-                name="TelaCarros"
+                name="Carros"
                 component={TelaCarros}
                 initialParams={{
                     navigation: navigation,
