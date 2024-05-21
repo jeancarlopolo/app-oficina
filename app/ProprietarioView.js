@@ -62,7 +62,7 @@ const ProprietarioView = ({ proprietario, removerProprietario, navigation }) => 
     };
 
     const handlePress = () => {
-        navigation.navigate('CarroView', { proprietario });
+        navigation.navigate('TelaCarros', { proprietario:proprietario });
     }
 
     return (proprietario ?
@@ -90,11 +90,11 @@ const ProprietarioView = ({ proprietario, removerProprietario, navigation }) => 
                             onChangeText={setNome}
                             autoFocus />
                     ) : (
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'space-evenly' }}>
                             <Pressable onPress={handlePress}>
-                                <Icon name="person" size={24} color="#333" style={styles.icon} />
+                                <Icon name="person" size={30} color="#333" style={styles.icon} />
                             </Pressable>
-                            <Text style={styles.nome}>{nome}</Text>
+                            <Text style={styles.nome} selectable={false}>{nome}</Text>
                         </View>
                     )}
                     {editing ? (

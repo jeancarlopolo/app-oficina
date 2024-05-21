@@ -9,11 +9,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 class TelaCarros extends Component {
-    constructor(route) {
-        super(route);
+    constructor(props) {
+        super(props);
+        console.log(props);
         this.state = {
-            carros: route.params.proprietario.listarCarros(),
-            proprietario: route.params.proprietario,
+            carros: props.route.params.proprietario.listarCarros(),
+            proprietario: props.route.params.proprietario,
             criando: false,
         };
     }
@@ -37,7 +38,7 @@ class TelaCarros extends Component {
                             removerProprietario={this.props.removerCarro}
                             navigation={this.props.navigation}
                         />}
-                        keyExtractor={item => item.id}
+                        keyExtractor={item => item.placa}
                     />
                     {/* {(this.state.criando) && (
                         <NovoCarroView // FAZER PARTE DO CARRO NOVO

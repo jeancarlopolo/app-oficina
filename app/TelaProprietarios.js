@@ -18,6 +18,7 @@ class TelaProprietarios extends Component {
 
     adicionarProprietario = (nome) => {
         let proprietario = new Proprietario(nome, this.state.proprietarioService);
+        proprietario.adicionarProprietario(this.state.proprietarioService);
         this.setState({ proprietarioService: proprietario.proprietarioService , criando: false});
     }
 

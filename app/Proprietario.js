@@ -6,13 +6,10 @@ class Proprietario {
     // é possível listar todos os carros
     // é possível pesquisar um carro por placa
 
-    constructor(nome, proprietarioService) {
+    constructor(nome) {
         this.id = Math.random().toString(16).slice(2)
         this.nome = nome;
         this.carros = [];
-        console.log('ProprietarioService', proprietarioService);
-        this.proprietarioService = proprietarioService;
-        proprietarioService.adicionarProprietario(this);
     }
 
 
@@ -32,6 +29,10 @@ class Proprietario {
 
     listarCarros() {
         return this.carros;
+    }
+
+    adicionarProprietario(proprietarioService) {
+        proprietarioService.adicionarProprietario(this);
     }
 
     pesquisarCarroPorPlaca(placa) {

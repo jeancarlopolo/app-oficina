@@ -2,12 +2,11 @@ class Carro {
     // possui placa, modelo, cor, proprietário, motorista, lista de checklists
     // CRUD de checklists
 
-    constructor(placa, modelo, cor, proprietario, motorista) {
+    constructor(placa, modelo, cor, idProprietario, motorista) {
         this.placa = placa;
         this.modelo = modelo;
         this.cor = cor;
-        this.proprietario = proprietario;
-        proprietario.adicionarCarro(this);
+        this.idProprietario = idProprietario;
         this.motorista = motorista;
         this.checklists = [];
     }
