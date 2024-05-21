@@ -5,6 +5,65 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const CarroView = ({ carro, removerCarro }) => {
     const pan = useRef(new Animated.Value(0)).current;
+    let corFundo = carro.corPTpraHex() != null ? carro.corPTpraHex() : '#f2ecff';
+    let corTexto = corFundo == '#FFFFFF' || corFundo == '#C0C0C0' ? '#333' : '#f2ecff';
+
+    let styles = StyleSheet.create({
+        animatedContainer: {
+            height: '100%',
+            width: '100%',
+            backgroundColor: corFundo,
+            verticalAlign: 'center',
+            justifyContent: 'center',
+        },
+        hiddenContainer: {
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            verticalAlign: 'center',
+            backgroundColor: '#00a97f',
+        },
+        itemContainer: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            verticalAlign: 'center',
+            backgroundColor: corFundo,
+            marginVertical: 8,
+            borderRadius: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.1,
+            shadowRadius: 5,
+            elevation: 3,
+            overflow: 'hidden',
+            flex: 1,
+        },
+        placa: {
+            fontSize: 18,
+            fontFamily: 'Nunito_500Regular',
+            color: corTexto,
+        },
+        modelo: {
+            fontSize: 14,
+            fontFamily: 'Nunito_400Regular',
+            color: corTexto,
+        },
+        placaInput: {
+            fontSize: 18,
+            fontFamily: 'Nunito_500Regular',
+            color: corTexto,
+            flex: 1,
+        },
+        icon: {
+            color: corTexto,
+            marginRight: 15,
+        },
+    });
+
 
     let voltar = () => {
         setAberto(false);
@@ -52,7 +111,7 @@ const CarroView = ({ carro, removerCarro }) => {
     };
 
     const handleCancel = () => {
-        setPlaca(placaAntigo);
+        setPlaca(placaAntiga);
         setEditing(false);
     };
 
@@ -64,7 +123,7 @@ const CarroView = ({ carro, removerCarro }) => {
     return (carro ?
         <View style={styles.itemContainer}>
             <View style={styles.hiddenContainer}>
-                <View style={{ flexDirection: 'row', padding: 15 }}>
+                <View style={{ flexDirection: 'row'}}>
                     <Pressable onPress={handleEdit} android_ripple={{ color: '#4a4857' }}>
                         <Icon name="edit" size={24} color="#f2ecff" style={styles.icon} />
                     </Pressable>
@@ -78,7 +137,7 @@ const CarroView = ({ carro, removerCarro }) => {
                 {...panResponder.panHandlers}
             >
 
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15, paddingVertical: 30, alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 15, paddingVertical: 30, alignItems: 'strech' }}>
                     {editing ? (
                         <TextInput
                             style={styles.placaInput}
@@ -86,7 +145,17 @@ const CarroView = ({ carro, removerCarro }) => {
                             onChangeText={setPlaca}
                             autoFocus />
                     ) : (
-                        <Text style={styles.placa}>{placa}</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', alignContent: 'center', alignSelf: 'flex-start' }}>
+                            <Pressable onPress={() => navigation.navigate('TelaInfoCarro', { carro })}>
+                                <Icon name="directions-car" size={24} color="#333" style={styles.icon} />
+                            </Pressable>
+                            <Pressable onPress={() => navigation.navigate('TelaInfoCarro', { carro })}>
+                            <View style={{ flexDirection: 'column' }}> {/*coluna nome tipo*/}
+                                <Text style={styles.placa}>{placa}</Text>
+                                <Text style={styles.modelo}>{carro.modelo}</Text>
+                            </View>
+                            </Pressable>
+                        </View>
                     )}
                     {editing ? (
                         <View style={{ flexDirection: 'row' }}>
@@ -107,55 +176,5 @@ const CarroView = ({ carro, removerCarro }) => {
         </View> : null
     );
 };
-const styles = StyleSheet.create({
-    animatedContainer: {
-        height: '100%',
-        width: '100%',
-        backgroundColor: 'white',
-        verticalAlign: 'center',
-        justifyContent: 'center',
-        paddingLeft: 15,
-    },
-    hiddenContainer: {
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        verticalAlign: 'center',
-        backgroundColor: '#00a97f',
-    },
-    itemContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        verticalAlign: 'center',
-        backgroundColor: '#f2ecff',
-        marginVertical: 8,
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        elevation: 3,
-        overflow: 'hidden',
-        flex: 1,
-    },
-    placa: {
-        fontSize: 18,
-        fontFamily: 'Nunito_500Regular',
-        color: '#333',
-    },
-    placaInput: {
-        fontSize: 18,
-        fontFamily: 'Nunito_500Regular',
-        color: '#333',
-        flex: 1,
-    },
-    icon: {
-        marginLeft: 15,
-    },
-});
 
 export { CarroView };

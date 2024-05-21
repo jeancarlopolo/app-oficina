@@ -59,8 +59,10 @@ class App extends Component {
 
         // proprietário de exemplo 2
         let toretto = new Proprietario('Dominic Toretto', this.state.proprietarioService);
-        let carro3 = new Carro('GHI9012', 'Charger', 'Preto', toretto.id, 'Vin Diesel');
+        let carro3 = new Carro('GHI9012', 'Charger', 'Prata', toretto.id, 'Vin Diesel');
+        let carro4 = new Carro('JKL3456', 'Eclipse', 'Branco', toretto.id, 'Dwayne Johnson');
         toretto.adicionarCarro(carro3);
+        toretto.adicionarCarro(carro4);
 
         // proprietário de exemplo 3 (vazio)
         let travis = new Proprietario('Travis Bickle', this.state.proprietarioService);

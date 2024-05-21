@@ -68,7 +68,7 @@ const ProprietarioView = ({ proprietario, removerProprietario, navigation }) => 
     return (proprietario ?
         <View style={styles.itemContainer}>
             <View style={styles.hiddenContainer}>
-                <View style={{ flexDirection: 'row', padding: 15 }}>
+                <View style={{ flexDirection: 'row'}}>
                     <Pressable onPress={handleEdit} android_ripple={{ color: '#4a4857' }}>
                         <Icon name="edit" size={24} color="#f2ecff" style={styles.icon} />
                     </Pressable>
@@ -90,7 +90,7 @@ const ProprietarioView = ({ proprietario, removerProprietario, navigation }) => 
                             onChangeText={setNome}
                             autoFocus />
                     ) : (
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'space-evenly' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'space-around' }}>
                             <Pressable onPress={handlePress}>
                                 <Icon name="person" size={30} color="#333" style={styles.icon} />
                             </Pressable>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     icon: {
-        marginLeft: 15,
+        marginRight: 15,
     },
 });
 
