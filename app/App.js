@@ -76,7 +76,7 @@ class App extends Component {
 
 
 
-    render() {
+    render() { // gambiarra dolorosa pra fazer o navigation funcionar
         return (<TelaProprietarios proprietarioService={this.state.proprietarioService} navigation={this.state.navigation} adicionarProprietario={this.adicionarProprietario} removerProprietario={this.removerProprietario} />
             
         );

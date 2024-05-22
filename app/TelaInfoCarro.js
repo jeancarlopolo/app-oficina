@@ -11,15 +11,15 @@ import { InfoCarro } from './InfoCarro.js';
 class TelaInfoCarro extends Component {
     constructor(props) {
         super(props);
-        console.log(props.route.params.carro);
+        let realProps = props.route.params.props.route.params; //KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK react native
         this.state = {
             carro: props.route.params.carro,
             infos: [
-                <InfoCarro nomeInfo='Cor' informacao={props.route.params.carro.cor} carro={props.route.params.carro} icone="palette" atualizarCarro={props.route.params.atualizarCarros}/>,
-            <InfoCarro nomeInfo='Placa' informacao={props.route.params.carro.placa} carro={props.route.params.carro} icone="confirmation-number" atualizarCarro={props.route.params.atualizarCarros} />,
-            <InfoCarro nomeInfo='Modelo' informacao={props.route.params.carro.modelo} carro={props.route.params.carro} icone="directions-car" atualizarCarro={props.route.params.atualizarCarros}/>,
-            <InfoCarro nomeInfo='Motorista' informacao={props.route.params.carro.motorista} carro={props.route.params.carro} icone="person" atualizarCarro={props.route.params.atualizarCarros}/>,
-            <InfoCarro nomeInfo='Proprietário' informacao={props.route.params.proprietario.nome} carro={props.route.params.carro} icone="person" atualizarCarro={props.route.params.atualizarCarros}/>],
+                <InfoCarro nomeInfo='Cor' informacao={realProps.carro.cor} carro={realProps.carro} icone="palette" atualizarCarro={realProps.atualizarCarros}/>,
+            <InfoCarro nomeInfo='Placa' informacao={realProps.carro.placa} carro={realProps.carro} icone="confirmation-number" atualizarCarro={realProps.atualizarCarros} />,
+            <InfoCarro nomeInfo='Modelo' informacao={realProps.carro.modelo} carro={realProps.carro} icone="directions-car" atualizarCarro={realProps.atualizarCarros}/>,
+            <InfoCarro nomeInfo='Motorista' informacao={realProps.carro.motorista} carro={realProps.carro} icone="person" atualizarCarro={realProps.atualizarCarros}/>,
+            <InfoCarro nomeInfo='Proprietário' informacao={realProps.proprietario.nome} carro={realProps.carro} icone="person" atualizarCarro={realProps.atualizarCarros}/>],
         };
     }
 

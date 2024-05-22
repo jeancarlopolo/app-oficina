@@ -42,6 +42,7 @@ class Carro {
     }
 
 
+
     editarChecklist(checklist) {
         let index = this.checklists.findIndex(c => c.dataCriacao === checklist.dataCriacao);
         if (index > -1) {
@@ -63,66 +64,54 @@ class Checklist {
     // cada um tem um status de ok ou não ok e um comentário opcional
     // a checklist possui uma data e hora de criação
     // é possível exportar a checklist para uma string formatada no clipboard
-    constructor(pastilhas, sistemaFreio, suspensao, pneus, agua, oleo, mangueiras) {
-        this.pastilhas = pastilhas;
-        this.sistemaFreio = sistemaFreio;
+    constructor(suspensao, pneus, agua, oleo, mangueiras) {
         this.suspensao = suspensao;
         this.pneus = pneus;
         this.agua = agua;
         this.oleo = oleo;
         this.mangueiras = mangueiras;
-        this.dataCriacao = new Date();
+        this.id = Math.floor(Math.random() * 1000);
+        this.dataCriacao = new Date().toLocaleString();
     }
 
     atualizarDataCriacao() {
         this.dataCriacao = new Date();
     }
 
-    exportarClipboard() {
-        // Ex: pastilhas = {status: 'ok', comentario: 'tudo certo'}
-        // Ex: sistemaFreio = {status: 'nok', comentario: 'trocar'}
-        // Pastilhas: ✅ - tudo certo
-        // Sistema de freio: ❌ - trocar
+    exportarClipboard(placa) {
 
-        let pastilhas = this.pastilhas.status === 'ok' ? '✅' : '❌';
-        let sistemaFreio = this.sistemaFreio.status === 'ok' ? '✅' : '❌';
-        let suspensao = this.suspensao.status === 'ok' ? '✅' : '❌';
-        let pneus = this.pneus.status === 'ok' ? '✅' : '❌';
-        let agua = this.agua.status === 'ok' ? '✅' : '❌';
-        let oleo = this.oleo.status === 'ok' ? '✅' : '❌';
-        let mangueiras = this.mangueiras.status === 'ok' ? '✅' : '❌';
+
+        let suspensao = this.suspensao["status"] === 'ok' ? '✅' : '❌';
+        let pneus = this.pneus["status"] === 'ok' ? '✅' : '❌';
+        let agua = this.agua["status"] === 'ok' ? '✅' : '❌';
+        let oleo = this.oleo["status"] === 'ok' ? '✅' : '❌';
+        let mangueiras = this.mangueiras["status"] === 'ok' ? '✅' : '❌';
 
         // se o comentário for vazio, não exibir
-        if (!this.pastilhas.comentario) {
-            this.pastilhas.comentario = 'Sem comentários';
+
+        if (!this.suspensao["comentario"]) {
+            this.suspensao["comentario"] = 'Sem comentários';
         }
-        if (!this.sistemaFreio.comentario) {
-            this.sistemaFreio.comentario = 'Sem comentários';
+        if (!this.pneus["comentario"]) {
+            this.pneus["comentario"] = 'Sem comentários';
         }
-        if (!this.suspensao.comentario) {
-            this.suspensao.comentario = 'Sem comentários';
+        if (!this.agua["comentario"]) {
+            this.agua["comentario"] = 'Sem comentários';
         }
-        if (!this.pneus.comentario) {
-            this.pneus.comentario = 'Sem comentários';
+        if (!this.oleo["comentario"]) {
+            this.oleo["comentario"] = 'Sem comentários';
         }
-        if (!this.agua.comentario) {
-            this.agua.comentario = 'Sem comentários';
-        }
-        if (!this.oleo.comentario) {
-            this.oleo.comentario = 'Sem comentários';
-        }
-        if (!this.mangueiras.comentario) {
-            this.mangueiras.comentario = 'Sem comentários';
+        if (!this.mangueiras["comentario"]) {
+            this.mangueiras["comentario"] = 'Sem comentários';
         }
 
         let clipboard = `Data da check-list: ${this.dataCriacao.toLocaleString()}\n`;
-        clipboard += `Pastilhas: ${pastilhas} - ${this.pastilhas.comentario}\n`;
-        clipboard += `Sistema de freio: ${sistemaFreio} - ${this.sistemaFreio.comentario}\n`;
-        clipboard += `Suspensão: ${suspensao} - ${this.suspensao.comentario}\n`;
-        clipboard += `Pneus: ${pneus} - ${this.pneus.comentario}\n`;
-        clipboard += `Água: ${agua} - ${this.agua.comentario}\n`;
-        clipboard += `Óleo: ${oleo} - ${this.oleo.comentario}\n`;
-        clipboard += `Mangueiras: ${mangueiras} - ${this.mangueiras.comentario}\n`;
+        clipboard += 'Placa: ' + placa + '\n';
+        clipboard += `Suspensão: ${suspensao} - ${this.suspensao["comentario"]}\n`;
+        clipboard += `Pneus: ${pneus} - ${this.pneus["comentario"]}\n`;
+        clipboard += `Água: ${agua} - ${this.agua["comentario"]}\n`;
+        clipboard += `Óleo: ${oleo} - ${this.oleo["comentario"]}\n`;
+        clipboard += `Mangueiras: ${mangueiras} - ${this.mangueiras["comentario"]}\n`;
 
         return clipboard;
     }

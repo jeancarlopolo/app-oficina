@@ -146,10 +146,10 @@ const CarroView = ({ carro, removerCarro, navigation, proprietario, atualizarCar
                             autoFocus />
                     ) : (
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', alignContent: 'center', alignSelf: 'flex-start' }}>
-                            <Pressable onPress={() => navigation.navigate('Informações do Carro', { carro:carro, proprietario:proprietario, atualizarCarros:atualizarCarros })}>
+                            <Pressable onPress={() => navigation.navigate('Carro', { carro:carro, proprietario:proprietario, atualizarCarros:atualizarCarros })}>
                                 <Icon name="directions-car" size={24} color="#333" style={styles.icon} />
                             </Pressable>
-                            <Pressable onPress={() => navigation.navigate('Informações do Carro', { carro:carro, proprietario:proprietario, atualizarCarros:atualizarCarros })}>
+                            <Pressable onPress={() => navigation.navigate('Carro', { carro:carro, proprietario:proprietario, atualizarCarros:atualizarCarros })}>
                             <View style={{ flexDirection: 'column' }}> {/*coluna nome tipo*/}
                                 <Text style={styles.placa}>{placa}</Text>
                                 <Text style={styles.modelo}>{carro.modelo}</Text>

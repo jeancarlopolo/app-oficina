@@ -4,7 +4,7 @@ import { Carro } from './Carro';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const InfoCarro = ({ carro, informacao, nomeInfo, icone, atualizarCarro }) => {
+const CheckView = ({ checklist, status, informacao, nomeInfo, atualizarChecklist }) => {
     const pan = useRef(new Animated.Value(0)).current;
     const key = nomeInfo;
 
@@ -102,6 +102,7 @@ const InfoCarro = ({ carro, informacao, nomeInfo, icone, atualizarCarro }) => {
 
     let [aberto, setAberto] = useState(false);
     let [editing, setEditing] = useState(false);
+    let [ok, setOk] = useState(status === "ok");
     const [info, setInfo] = useState(informacao);
     let infoAntiga = informacao;
 
@@ -117,19 +118,29 @@ const InfoCarro = ({ carro, informacao, nomeInfo, icone, atualizarCarro }) => {
     };
 
     const handleConfirm = () => {
-        carro[nomeInfo.toLowerCase()] = info;
+        console.log(checklist);
+        checklist[nomeInfo.toLowerCase()]["comentario"] = info;
         setEditing(false);
-        atualizarCarro();
+        atualizarChecklist(nomeInfo, ok, checklist);
     };
 
-    return (carro ?
+    const handleOk = () => {
+        setOk(!ok);
+        voltar();
+        atualizarChecklist(nomeInfo, ok, checklist);
+    }
+
+    return (checklist ?
         <View style={styles.itemContainer}>
             <View style={styles.hiddenContainer}>
                 <View style={{ flexDirection: 'row' }}>
-                    {nomeInfo === "Proprietário" ? null : (
+                    {(
                         <Pressable onPress={handleEdit} android_ripple={{ color: '#4a4857' }}>
                             <Icon name="edit" size={24} color="#f2ecff" style={styles.icon} />
                         </Pressable>)}
+                        <Pressable onPress={handleOk} android_ripple={{ color: '#4a4857' }}>
+                            <Icon name="check" size={24} color="#f2ecff" style={styles.icon} />
+                        </Pressable>
                 </View>
             </View>
             <Animated.View
@@ -146,10 +157,10 @@ const InfoCarro = ({ carro, informacao, nomeInfo, icone, atualizarCarro }) => {
                             autoFocus />
                     ) : (
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', alignContent: 'center', alignSelf: 'flex-start' }}>
-                            <Icon name={icone} size={24} color="#333" style={styles.icon} />
+                            <Icon name={ok ? "check" : "close"} size={24} color="#333" style={styles.icon} />
                             <View style={{ flexDirection: 'column' }}> {/*coluna informacao tipo*/}
-                                <Text style={styles.modelo}>{nomeInfo}</Text>
-                                <Text style={styles.informacao}>{info}</Text>
+                                <Text style={styles.modelo} selectable={false}>{nomeInfo}</Text>
+                                <Text style={styles.informacao} selectable={false}>{info}</Text>
                             </View>
 
                         </View>
@@ -174,4 +185,4 @@ const InfoCarro = ({ carro, informacao, nomeInfo, icone, atualizarCarro }) => {
     );
 };
 
-export { InfoCarro };
+export { CheckView };
